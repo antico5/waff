@@ -1,8 +1,7 @@
 class Issue
   attr_reader :repository, :number, :title, :labels, :body
 
-  def initialize(repository, json)
-    data = JSON.parse json
+  def initialize(repository, data)
     @repository = repository
     @number = data['number']
     @title = data['title']
@@ -21,7 +20,19 @@ class Issue
   end
 
   def mark_in_progress!
-    repository.mark_in_progress self
+    labels.delete 'ready'
+    labels.delete 'to do'
+    labels << 'in progress'
+
+    repository.export_labels self
+  end
+
+  def mark_ready!
+    labels << 'ready'
+    labels << 'to do'
+    labels.delete 'in progress'
+
+    repository.export_labels self
   end
 
   private
