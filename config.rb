@@ -5,15 +5,15 @@ class Config
 
   class << self
     def user
-      config[:user]
+      config['user']
     end
 
     def token
-      config[:token]
+      config['token']
     end
 
     def remote
-      config[:remote]
+      config['remote']
     end
 
     def get_owner_and_repo
@@ -24,7 +24,7 @@ class Config
     private
 
     def config
-      @config ||= YAML.load_file(CONFIG_FILE).transform_keys &:to_sym
+      @config ||= YAML.load_file(CONFIG_FILE)
     end
   end
 end
