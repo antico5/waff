@@ -12,7 +12,7 @@ class Issue
   def create_local_branch!
     branch_name = "##{number}-#{Helper.slug title}"
     puts "Creating branch #{branch_name}"
-    `git co -b '#{branch_name}'`
+    `git checkout -b '#{branch_name}'`
   end
 
   def assign_to_self!
