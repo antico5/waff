@@ -25,6 +25,14 @@ def init_config
   end
 end
 
+def check_local_repository_exists
+  unless File.exist?('.git')
+    puts 'No git repository found. Please move to the root of your project.'
+    exit
+  end
+end
+
+check_local_repository_exists
 init_config
 
 
