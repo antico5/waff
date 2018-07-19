@@ -8,6 +8,20 @@ require_relative 'core.rb'
 CONFIG_FILE = '.waff.yml'
 EXCLUDE_FILE = '.git/info/exclude'
 
+HELP_TEXT = <<-EOF
+Usage:
+
+waff [command] [params]
+
+Commands:
+
+waff list         -- Shows ready and in progress issues
+waff show         -- Shows description of current issue (determined by current branch)
+waff show number  -- Shows description of a given issue
+waff take number  -- Sets the issue in progress, assigns it to yourself, and creates a branch for it
+waff pause number -- Sets the issue to ready state
+EOF
+
 def init_config
   unless File.exist?(CONFIG_FILE)
     puts "No config file detected (#{CONFIG_FILE}). Will generate one now in current directory."
@@ -82,4 +96,6 @@ when 'show'
   issue = repo.get_issue issue_number
   puts "##{issue.number}\t #{issue.title}\n\n"
   puts issue.body
+else
+  puts HELP_TEXT
 end
