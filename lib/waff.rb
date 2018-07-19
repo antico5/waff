@@ -1,8 +1,5 @@
-#!/usr/bin/env ruby
-
 require 'fileutils'
 require 'httparty'
-require 'pry'
 require_relative 'core.rb'
 
 CONFIG_FILE = '.waff.yml'
