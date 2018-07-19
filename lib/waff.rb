@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'fileutils'
 require 'httparty'
 require_relative 'core.rb'
