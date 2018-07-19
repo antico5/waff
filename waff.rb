@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
 require 'httparty'
 require 'pry'
 require_relative 'core.rb'
 
 CONFIG_FILE = '.waff.yml'
+EXCLUDE_FILE = '.git/info/exclude'
 
 def init_config
   unless File.exist?(CONFIG_FILE)
@@ -13,15 +15,25 @@ def init_config
     user = $stdin.gets
     print 'Github password/personal token: '
     token = $stdin.gets
-    print 'Git remote (leave empty for "origin"):'
+    print 'Git remote (leave empty for "origin"): '
     remote = $stdin.gets.strip
     remote = remote.empty? ? 'origin' : remote
 
+    # Write config file
     File.open(CONFIG_FILE, 'w') do |file|
       file.puts "user: #{user}"
       file.puts "token: #{token}"
       file.puts "remote: #{remote}"
     end
+
+    # Write exclude file
+    FileUtils.mkdir_p(File.dirname(EXCLUDE_FILE))
+    File.open(EXCLUDE_FILE, 'a+') do |file|
+      unless file.read =~ /^#{CONFIG_FILE}$/
+        file.puts CONFIG_FILE
+      end
+    end
+
   end
 end
 
