@@ -10,7 +10,7 @@ class Issue
   end
 
   def create_local_branch!
-    branch_name = "##{number}-#{Helper.slug title}"
+    branch_name = "#{number}-#{Helper.slug title}"
     puts "Creating branch #{branch_name}"
     `git checkout -b '#{branch_name}'`
   end
