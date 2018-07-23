@@ -1,0 +1,21 @@
+PATH
+  remote: .
+  specs:
+    waff (0.0.3)
+      httparty (~> 0.16)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
+    multi_xml (0.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  waff!
+
+BUNDLED WITH
+   1.16.1
