@@ -1,11 +1,14 @@
 require 'fileutils'
 require 'httparty'
 require_relative 'core.rb'
+require_relative 'waff/version'
 
 CONFIG_FILE = '.waff.yml'
 EXCLUDE_FILE = '.git/info/exclude'
 
 HELP_TEXT = <<-EOF
+Waff version #{Waff::VERSION}
+
 Usage:
 
 waff [command] [params]
@@ -95,4 +98,8 @@ when 'show'
   puts issue.body
 else
   puts HELP_TEXT
+end
+
+module Waff
+
 end
