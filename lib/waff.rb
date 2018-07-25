@@ -1,6 +1,6 @@
 require 'fileutils'
 require 'httparty'
-require_relative 'core.rb'
+require_relative 'waff/core'
 require_relative 'waff/version'
 
 CONFIG_FILE = '.waff.yml'
