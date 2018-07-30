@@ -1,7 +1,10 @@
 # coding: utf-8
+
+require_relative 'lib/waff/version'
+
 Gem::Specification.new do |spec|
   spec.name          = "waff"
-  spec.version       = "0.0.4"
+  spec.version       = Waff::VERSION
   spec.authors       = ["Armando Andini"]
   spec.email         = ["armando.andini@gmail.com"]
   spec.summary       = %q{Helps you with github flow based on Waffle tool}
