@@ -11,7 +11,7 @@ module Waff
     end
 
     def create_local_branch!
-      branch_name = "#{number}-#{Helper.slug title}"
+      branch_name = "#{number}-#{slug}"
       puts "Creating branch #{branch_name}"
       `git checkout -b '#{branch_name}'`
     end
@@ -40,6 +40,10 @@ module Waff
 
     def parse_labels(data)
       @labels = data['labels'].map { |label| label['name'] }
+    end
+
+    def slug
+      title.downcase.strip.tr(' ', '-').gsub(/[^\w-]/, '')
     end
   end
 end

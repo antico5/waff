@@ -1,7 +1,7 @@
 module Waff
   class Config
     REMOTE_NOT_FOUND = <<-EOF
-  Can't find owner and repository. Make sure the remote name is correctly set on the configuration file.
+      Can't find owner and repository. Make sure the remote name is correctly set on the configuration file.
     EOF
 
     class << self

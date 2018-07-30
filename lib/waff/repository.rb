@@ -14,7 +14,7 @@ module Waff
       response = self.class.get github_url ['issues', number]
 
       if response.success?
-        Issue.new(self, JSON.parse(response.body))
+        Issue.new(self, response.parsed_response)
       else
         puts 'ERROR requesting issue'
         puts response.body
@@ -47,7 +47,7 @@ module Waff
       response = self.class.get github_url(['issues']), query: { labels: label }
 
       if response.success?
-        issues_data = JSON.parse response.body
+        issues_data = response.parsed_response
         issues_data.reject! { |data| data['pull_request'] }
         issues_data.map { |data| Issue.new(self, data) }
       else
