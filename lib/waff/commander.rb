@@ -16,6 +16,8 @@ module Waff
           Commands::List.call(params)
         when 'show'
           Commands::Show.call(params)
+        when 'open'
+          Commands::Open.call(params)
         else
           puts HELP_TEXT
         end

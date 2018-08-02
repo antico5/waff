@@ -11,7 +11,7 @@ module Waff
     end
 
     def get_issue(number)
-      response = self.class.get github_url ['issues', number]
+      response = self.class.get(github_api_url ['issues', number])
 
       if response.success?
         Issue.new(self, response.parsed_response)
@@ -21,8 +21,12 @@ module Waff
       end
     end
 
+    def issue_url(number)
+      github_url ['issues', number]
+    end
+
     def assign_issue(number)
-      url = github_url ['issues', number, 'assignees']
+      url = github_api_url ['issues', number, 'assignees']
       response = self.class.post url, body: { assignees: [@user] }.to_json
       if response.success?
         puts "Successfully assigned issue ##{number} to #{@user}."
@@ -33,7 +37,7 @@ module Waff
     end
 
     def export_labels issue
-      url = github_url ['issues', issue.number, 'labels']
+      url = github_api_url ['issues', issue.number, 'labels']
       response = self.class.put url, body: issue.labels.to_json
       if response.success?
         puts "Successfully assigned #{issue.labels.inspect} labels to  ##{issue.number}"
@@ -44,7 +48,7 @@ module Waff
     end
 
     def get_open_issues label
-      response = self.class.get github_url(['issues']), query: { labels: label }
+      response = self.class.get github_api_url(['issues']), query: { labels: label }
 
       if response.success?
         issues_data = response.parsed_response
@@ -58,9 +62,14 @@ module Waff
 
     private
 
-    def github_url(nodes)
+    def github_api_url(nodes)
       subpath = nodes.join '/'
       "https://api.github.com/repos/#{@owner_and_repo}/" + subpath
+    end
+
+    def github_url(nodes)
+      subpath = nodes.join '/'
+      "https://github.com/#{@owner_and_repo}/" + subpath
     end
   end
 end

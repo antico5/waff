@@ -28,5 +28,10 @@ Optionally you can set up the remote name to be used, with `origin` as default. 
 * assign yourself as assignee
 * create a branch named `123-issue-title-slug`, starting from the current branch. Normally you want to run this from master branch.
 
+#### Open an issue in the browser
+`waff open 123` will open the browser on issue 123
+
+`waff open` will open the browser on current issue
+
 #### Pause an issue
 `waff pause 123` will put the issue back in the `ready` column, but won't unassign you from it.
