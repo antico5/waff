@@ -4,8 +4,7 @@ module Waff
   module Commands
     class List < Command
       def call params
-        ready_issues = github_repo.get_open_issues 'ready'
-        ready_issues += github_repo.get_open_issues 'to do'
+        ready_issues = github_repo.get_open_issues Config.ready_label
         puts "Ready: \n\n"
         ready_issues.each do |issue|
           puts "##{issue.number}\t #{issue.title}"
