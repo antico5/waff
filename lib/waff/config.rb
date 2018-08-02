@@ -22,23 +22,35 @@ module Waff
         url[/:(.*)\.git/, 1] || raise(REMOTE_NOT_FOUND)
       end
 
+      def ready_label
+        config['ready_label'] || 'to do'
+      end
+
       def init_config!
         return if File.exist?(CONFIG_FILE)
 
         puts "No config file detected (#{CONFIG_FILE}). Will generate one now in current directory."
+
         print 'Github username: '
         user = $stdin.gets
+
         print 'Github password/personal token: '
         token = $stdin.gets
+
         print 'Git remote (leave empty for "origin"): '
         remote = $stdin.gets.strip
         remote = remote.empty? ? 'origin' : remote
+
+        print 'Ready label (leave empty for "to do"): '
+        ready_label = $stdin.gets.strip
+        ready_label = ready_label.empty? ? 'to do' : ready_label
 
         # Write config file
         File.open(CONFIG_FILE, 'w') do |file|
           file.puts "user: #{user}"
           file.puts "token: #{token}"
           file.puts "remote: #{remote}"
+          file.puts "ready_label: #{ready_label}"
         end
 
         # Write exclude file

@@ -21,17 +21,17 @@ module Waff
     end
 
     def mark_in_progress!
-      labels.delete 'ready'
-      labels.delete 'to do'
+      labels.delete Config.ready_label
       labels << 'in progress'
+      labels.uniq!
 
       repository.export_labels self
     end
 
     def mark_ready!
-      labels << 'ready'
-      labels << 'to do'
+      labels << Config.ready_label
       labels.delete 'in progress'
+      labels.uniq!
 
       repository.export_labels self
     end
