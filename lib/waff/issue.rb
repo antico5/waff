@@ -24,6 +24,7 @@ module Waff
       labels.delete 'ready'
       labels.delete 'to do'
       labels << 'in progress'
+      labels.uniq!
 
       repository.export_labels self
     end
@@ -32,6 +33,7 @@ module Waff
       labels << 'ready'
       labels << 'to do'
       labels.delete 'in progress'
+      labels.uniq!
 
       repository.export_labels self
     end
