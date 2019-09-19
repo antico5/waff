@@ -1,5 +1,9 @@
 module Waff
   class Config
+    DEFAULT_BACKLOG_LABEL = 'backlog'
+    DEFAULT_READY_LABEL = 'to do'
+    DEFAULT_IN_PROGRESS_LABEL = 'in progress'
+
     REMOTE_NOT_FOUND = <<-EOF
       Can't find owner and repository. Make sure the remote name is correctly set on the configuration file.
     EOF
@@ -22,8 +26,16 @@ module Waff
         url[/:(.*)\.git/, 1] || raise(REMOTE_NOT_FOUND)
       end
 
+      def backlog_label
+        config['backlog_label'] || 'backlog'
+      end
+
       def ready_label
-        config['ready_label'] || 'to do'
+        config['ready_label'] || DEFAULT_READY_LABEL
+      end
+
+      def in_progress_label
+        config['in_progress_label'] || 'in progress'
       end
 
       def init_config!
@@ -41,16 +53,26 @@ module Waff
         remote = $stdin.gets.strip
         remote = remote.empty? ? 'origin' : remote
 
-        print 'Ready label (leave empty for "to do"): '
+        print "Backlog label (leave empty for '#{DEFAULT_BACKLOG_LABEL}'): "
+        backlog_label = $stdin.gets.strip
+        backlog_label = backlog_label.empty? ? DEFAULT_BACKLOG_LABEL : backlog_label
+
+        print "Ready label (leave empty for '#{DEFAULT_READY_LABEL}'): "
         ready_label = $stdin.gets.strip
-        ready_label = ready_label.empty? ? 'to do' : ready_label
+        ready_label = ready_label.empty? ? DEFAULT_READY_LABEL : ready_label
+
+        print "In Progress label (leave empty for '#{DEFAULT_IN_PROGRESS_LABEL}'): "
+        in_progress_label = $stdin.gets.strip
+        in_progress_label = in_progress_label.empty? ? DEFAULT_IN_PROGRESS_LABEL : in_progress_label
 
         # Write config file
         File.open(CONFIG_FILE, 'w') do |file|
-          file.puts "user: #{user}"
-          file.puts "token: #{token}"
-          file.puts "remote: #{remote}"
-          file.puts "ready_label: #{ready_label}"
+          file.puts "user: '#{user}'"
+          file.puts "token: '#{token}'"
+          file.puts "remote: '#{remote}'"
+          file.puts "backlog_label: '#{backlog_label}'"
+          file.puts "ready_label: '#{ready_label}'"
+          file.puts "in_progress_label: '#{in_progress_label}'"
         end
 
         # Write exclude file

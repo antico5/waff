@@ -22,7 +22,7 @@ module Waff
 
     def mark_in_progress!
       labels.delete Config.ready_label
-      labels << 'in progress'
+      labels << Config.in_progress_label
       labels.uniq!
 
       repository.export_labels self
@@ -30,7 +30,7 @@ module Waff
 
     def mark_ready!
       labels << Config.ready_label
-      labels.delete 'in progress'
+      labels.delete Config.in_progress_label
       labels.uniq!
 
       repository.export_labels self

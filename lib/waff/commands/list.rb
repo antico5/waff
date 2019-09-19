@@ -4,19 +4,16 @@ module Waff
   module Commands
     class List < Command
       def call params
-        ready_issues = github_repo.get_open_issues Config.ready_label
-        puts "Ready: \n\n"
-        ready_issues.each do |issue|
-          puts "##{issue.number}\t #{issue.title}"
+        [
+          ['Backlog', Config.backlog_label],
+          ['Ready', Config.ready_label],
+          ['In Progress', Config.in_progress_label]
+        ].each do |(label_title, label)|
+          issues = github_repo.get_open_issues label
+          puts "#{label_title}: \n\n"
+          issues.each { |issue| puts "##{issue.number}\t #{issue.title}" }
+          puts
         end
-        puts
-
-        in_progress_issues = github_repo.get_open_issues 'in progress'
-        puts "In progress: \n\n"
-        in_progress_issues.each do |issue|
-          puts "##{issue.number}\t #{issue.title}"
-        end
-        puts
       end
     end
   end
